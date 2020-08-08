@@ -12,6 +12,7 @@ const char S_MSG[][6][17] = {{"Travaille produ-", // BREAKIN
                                "travail)        "}};
 
 const int led = 10;  // the pin with a LED
+const int button = 11;
 
 #define LCD_WIDTH 16
 #define LCD_HEIGHT 2

@@ -1,21 +1,29 @@
+#include <FTDebouncer.h>
 #include <TimerOne.h>
 #include <LiquidCrystal.h>
+
 #include "definitions.h"
 
 LiquidCrystal lcd(7, 6, 5, 4, 3, 2);
+FTDebouncer pinDebouncer;
 
 void setup() {
   lcd.begin(LCD_WIDTH, LCD_HEIGHT);
+  Serial.begin(9600);
+
+  pinDebouncer.addPin(button, LOW);
+  pinDebouncer.begin();
+  
   pinMode(led, OUTPUT);
   digitalWrite(led, HIGH); // Turn off led
+  
   Timer1.initialize(500000);
   Timer1.attachInterrupt(incTime); // incTime to run every 0.5 seconds
-  Serial.begin(9600);
 }
 
-// The main program will print the blink count
-// to the Arduino Serial Monitor
 void loop() {
+  pinDebouncer.update();
+  
   unsigned long timerCopy;  // holds a copy of the timer
   //unsigned long blinkLedCopy;  // holds a copy of blinkLed
   // to read a variable which the interrupt code writes, we
@@ -64,6 +72,18 @@ void loop() {
     blinkLed = 0;
     digitalWrite(led, HIGH); // Turn off led
   }
+}
 
-  delay(100);
+// Used by FTDebouncer, when buttons get activated
+void onPinActivated(int pin){
+  Serial.println("Button pressed down");
+  if (pin == button) {
+    globalState = !globalState; message = 0;
+
+    noInterrupts();
+    timer = 0; // Reset timer
+    interrupts();
+  }
+}
+void onPinDeactivated(int pin){
 }
