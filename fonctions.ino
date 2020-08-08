@@ -64,5 +64,5 @@ void displayTimeUnits(unsigned long timer) {
   lcd.print(secs);
   lcd.print(" (");
   lcd.print(timer/2);
-  lcd.print(")");
+  lcd.print(")   ");
 }
