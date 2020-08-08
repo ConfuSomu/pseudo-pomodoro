@@ -7,7 +7,7 @@ LiquidCrystal lcd(7, 6, 5, 4, 3, 2);
 void setup() {
   lcd.begin(LCD_WIDTH, LCD_HEIGHT);
   pinMode(led, OUTPUT);
-  digitalWrite(led, HIGH); // turn off led
+  digitalWrite(led, HIGH); // Turn off led
   Timer1.initialize(500000);
   Timer1.attachInterrupt(incTime); // incTime to run every 0.5 seconds
   Serial.begin(9600);
@@ -25,7 +25,6 @@ void loop() {
   // use the copy while allowing the interrupt to keep working.
   noInterrupts();
   timerCopy = timer;
-  //blinkLedCopy = blinkLed;
   interrupts();
 
   Serial.print("timer = ");
@@ -39,12 +38,31 @@ void loop() {
   displayMessage(timerCopy);
   displayTimeUnits(timerCopy);
 
-  if (timer > 120*2) { // 120 sec till break
-    blinkLed = 1;
-    globalState = 1;
-  } else {
+  if (globalState == 0) { // Work time
+    if (timer > 120*2) {
+      // Break time after 120 sec
+      blinkLed = 1; globalState = 1; message = 0;
+      
+      noInterrupts();
+      timer = 0; // Reset timer, for break time.
+      interrupts();
+    }
+  
+  } else if (globalState == 1) { // Break time
+    if (timer > 80*2) {
+      // Back to work after 80 sec
+      blinkLed = 1; globalState = 0; message = 0;
+
+      noInterrupts();
+      timer = 0; // Reset timer, for break time.
+      interrupts();
+    }
+  }
+
+  if (timer > 20*2) {
+    // Stop blinking led 20 sec after globalState switch.
     blinkLed = 0;
-    globalState = 0;
+    digitalWrite(led, HIGH); // Turn off led
   }
 
   delay(100);
