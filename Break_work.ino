@@ -9,13 +9,16 @@ FTDebouncer pinDebouncer;
 
 void setup() {
   lcd.begin(LCD_WIDTH, LCD_HEIGHT);
+  
+  #ifdef DEBUG
   Serial.begin(9600);
+  #endif
 
   pinDebouncer.addPin(button, LOW);
   pinDebouncer.begin();
   
   pinMode(led, OUTPUT);
-  digitalWrite(led, LOW); // Turn off led
+  digitalWrite(led, LOW);
   
   Timer1.initialize(500000);
   Timer1.attachInterrupt(incTime); // incTime to run every 0.5 seconds
@@ -35,6 +38,7 @@ void loop() {
   timerCopy = timer;
   interrupts();
 
+  #ifdef DEBUG
   Serial.print("timer = ");
   Serial.print(timerCopy);
   Serial.print("blinkStartTime = ");
@@ -45,6 +49,7 @@ void loop() {
   Serial.print(subState);
   Serial.print(" globalState = ");
   Serial.println(globalState);
+  #endif
 
   calculateTimeUnits(timerCopy);
   displayMessage(timerCopy);
@@ -70,7 +75,7 @@ void loop() {
   if (blinkLed && timer > blinkStartTime+20*2) {
     // Stop blinking led 20 sec after globalState switch.
     blinkLed = 0;
-    digitalWrite(led, LOW); // Turn off led
+    digitalWrite(led, LOW);
   }
 }
 

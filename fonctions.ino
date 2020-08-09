@@ -42,7 +42,9 @@ void displayMessage(unsigned long timer) {
   
   lcd.setCursor(0,0);
   lcd.print(S_MSG[globalState][subState][message]);
+  #ifdef DEBUG
   Serial.println(S_MSG[globalState][subState][message]);
+  #endif
 }
 
 void displayTimeUnits(unsigned long timer) {

@@ -5,6 +5,7 @@ const int button = 11;
 
 #define LCD_WIDTH 16
 #define LCD_HEIGHT 2
+#define DEBUG
 
 // Program strings
 const char S_MSG[2][2][6][LCD_WIDTH+1] = 
