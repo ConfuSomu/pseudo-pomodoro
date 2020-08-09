@@ -1,6 +1,6 @@
 void incTime() {
   timer::t++;
-  if (!(timer::t % 20)) message::part++; // Increment messageId each 10 secs
+  if (!(timer::t % MSG_UPDATEFREQ)) message::part++; // Increment messageId each 10 secs
   
   if (led::blink && timer::t % 2) {
     led::state = ! led::state;

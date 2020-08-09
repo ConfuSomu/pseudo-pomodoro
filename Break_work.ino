@@ -19,7 +19,7 @@ void setup() {
   
   pinMode(led::pin, OUTPUT);
   
-  Timer1.initialize(500000);
+  Timer1.initialize(TIMERFREQ);
   Timer1.attachInterrupt(incTime); // incTime to run every 0.5 seconds
 }
 
@@ -55,8 +55,8 @@ void loop() {
   displayTimeUnits(timerCopy);
 
   if (globalState == 0) { // Work time
-    if (timerCopy > 120*2 && subState != 1) {
-      // Break time after 120 sec
+    if (timerCopy > BREAKIN_TIME && subState != 1) {
+      // Break time
       led::blink = 1;
       led::startTime = timerCopy;
       message::part = 0;
@@ -64,8 +64,8 @@ void loop() {
     }
   
   } else if (globalState == 1) { // Break time
-    if (timerCopy > 25*2 && subState != 1) {
-      // Back to work after 25 sec
+    if (timerCopy > BACKTOWORK_TIME && subState != 1) {
+      // Back to work
       led::blink = 1;
       led::startTime = timerCopy;
       message::part = 0;
@@ -73,8 +73,8 @@ void loop() {
     }
   }
 
-  if (led::blink && timerCopy > led::startTime+20*2) {
-    // Stop blinking led 20 sec after globalState switch.
+  if (led::blink && timerCopy > led::startTime+BLINKDURATION) {
+    // Stop blinking led after globalState switch.
     led::blink = 0;
     digitalWrite(led::pin, LOW);
   }

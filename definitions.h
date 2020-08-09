@@ -2,7 +2,13 @@
 
 #define LCD_WIDTH 16
 #define LCD_HEIGHT 2
-#define DEBUG
+#define DEBUG /*Enable debug features*/
+
+#define TIMERFREQ 500000 /*Timer run frequency, set at 0.5s. Should not be changed!*/
+#define MSG_UPDATEFREQ 20 /*Speed of scrolling text. In 0.5s (timer) multiples.*/
+#define BREAKIN_TIME (120*2) /*Time before user is asked to take a break. In 0.5s multiples.*/
+#define BACKTOWORK_TIME (25*2) /*Time before user is asked to work. In 0.5s multiples.*/
+#define BLINKDURATION (20*2) /*LED blink duration. In 0.5s multiples.*/
 
 // LED
 namespace led {
