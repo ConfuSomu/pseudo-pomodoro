@@ -59,12 +59,18 @@ void loop() {
       // Nearly there!
       message::part = 0;
       subState = 2;
-    } else if (timerCopy > BREAKIN_TIME && subState != 1) {
+    } else if (timerCopy > BREAKIN_TIME && timerCopy < MUSTBREAK_TIME && subState != 1) {
       // Break time
+      led::blink = 1;
+      led::startTime = timerCopy-BLINKDURATION; // Allows for longer blink duration
+      message::part = 0;
+      subState = 1;
+    } else if (timerCopy > MUSTBREAK_TIME && subState != 3) {
+      // Must take a break
       led::blink = 1;
       led::startTime = timerCopy;
       message::part = 0;
-      subState = 1;
+      subState = 3;
     }
   
   } else if (globalState == 1) { // Break time
