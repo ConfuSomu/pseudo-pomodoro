@@ -14,11 +14,10 @@ void setup() {
   Serial.begin(9600);
   #endif
 
-  pinDebouncer.addPin(button, LOW);
+  pinDebouncer.addPin(button::pin, LOW);
   pinDebouncer.begin();
   
-  pinMode(led, OUTPUT);
-  digitalWrite(led, LOW);
+  pinMode(led::pin, OUTPUT);
   
   Timer1.initialize(500000);
   Timer1.attachInterrupt(incTime); // incTime to run every 0.5 seconds
@@ -35,16 +34,16 @@ void loop() {
   // with interrupts off, just quickly make a copy, and then
   // use the copy while allowing the interrupt to keep working.
   noInterrupts();
-  timerCopy = timer;
+  timerCopy = timer::t;
   interrupts();
 
   #ifdef DEBUG
   Serial.print("timer = ");
   Serial.print(timerCopy);
   Serial.print("blinkStartTime = ");
-  Serial.print(blinkStartTime);
-  Serial.print(" message = ");
-  Serial.print(message);
+  Serial.print(led::startTime);
+  Serial.print(" part = ");
+  Serial.print(message::part);
   Serial.print(" subState = ");
   Serial.print(subState);
   Serial.print(" globalState = ");
@@ -56,40 +55,42 @@ void loop() {
   displayTimeUnits(timerCopy);
 
   if (globalState == 0) { // Work time
-    if (timer > 120*2 && subState != 1) {
+    if (timerCopy > 120*2 && subState != 1) {
       // Break time after 120 sec
-      blinkLed = 1; blinkStartTime = timerCopy;
-      message = 0;
+      led::blink = 1;
+      led::startTime = timerCopy;
+      message::part = 0;
       subState = 1;
     }
   
   } else if (globalState == 1) { // Break time
-    if (timer > /*80*/25*2 && subState != 1) {
+    if (timerCopy > 25*2 && subState != 1) {
       // Back to work after 25 sec
-      blinkLed = 1; blinkStartTime = timerCopy;
-      message = 0;
+      led::blink = 1;
+      led::startTime = timerCopy;
+      message::part = 0;
       subState = 1;
     }
   }
 
-  if (blinkLed && timer > blinkStartTime+20*2) {
+  if (led::blink && timerCopy > led::startTime+20*2) {
     // Stop blinking led 20 sec after globalState switch.
-    blinkLed = 0;
-    digitalWrite(led, LOW);
+    led::blink = 0;
+    digitalWrite(led::pin, LOW);
   }
 }
 
 // Used by FTDebouncer, when buttons get activated
 void onPinActivated(int pin){
   Serial.println("Button pressed down");
-  if (pin == button) {
-    globalState = !globalState;
+  if (pin == button::pin) {
+    globalState = !globalState; // Invert globalState, effectively switching between the two modes
     subState = 0;
-    blinkLed = 0;
+    led::blink = 0;
 
     noInterrupts();
-    timer = 0; // Reset timer when switching between globalStates
-    message = 0;
+    timer::t = 0; // Reset timer when switching between globalStates
+    message::part = 0;
     interrupts();
   }
 }

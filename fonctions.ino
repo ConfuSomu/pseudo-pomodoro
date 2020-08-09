@@ -1,14 +1,10 @@
 void incTime() {
-  timer++;
-  if (!(timer % 20)) message++; // Increment messageId each 10 secs
+  timer::t++;
+  if (!(timer::t % 20)) message::part++; // Increment messageId each 10 secs
   
-  if (blinkLed && timer % 2) {
-    if (ledState == LOW) {
-      ledState = HIGH;
-    } else {
-      ledState = LOW;
-    }
-    digitalWrite(led, ledState);
+  if (led::blink && timer::t % 2) {
+    led::state = ! led::state;
+    digitalWrite(led::pin, led::state);
   }
 }
 
@@ -25,46 +21,38 @@ void displayZero(unsigned long n) {
 
 void calculateTimeUnits(unsigned long timer) {
   if (timer/2 <= 0) {
-    hrs = 0;
-    mins = 0;
-    secs = 0;
+    timer::hrs = 0;
+    timer::mins = 0;
+    timer::secs = 0;
   } else {
     // Flooring, in this case truncation, is done by type casting,
     // as hrs & mins are longs and secs is an int.
-    hrs = (timer/2) / 3600;
-    mins = ((timer/2) - (hrs*3600)) / 60;
-    secs = (timer/2) % 60;
+    timer::hrs = (timer/2) / 3600;
+    timer::mins = ((timer/2) - (timer::hrs*3600)) / 60;
+    timer::secs = (timer/2) % 60;
   }
 }
 
 void displayMessage(unsigned long timer) {
-  if (message > messageLen[globalState][subState]) message = 0;
+  if (message::part > message::len[globalState][subState]) message::part = 0;
   
   lcd.setCursor(0,0);
-  lcd.print(S_MSG[globalState][subState][message]);
+  lcd.print(S_MSG[globalState][subState][message::part]);
   #ifdef DEBUG
-  Serial.println(S_MSG[globalState][subState][message]);
+  Serial.println(S_MSG[globalState][subState][message::part]);
   #endif
 }
 
 void displayTimeUnits(unsigned long timer) {
-//  char output[LCD_WIDTH+1];
-
-  // Note that sprintf's return value is the string lenght! Use for error checking.
-  // sprintf does not want to co-op with me…
-//  sprintf(output, "(%03d) %02d:%02d:%02d", (timer/2), hrs, mins, secs);
-//  Serial.print(output);
-  
   lcd.setCursor(0,1);
-//  lcd.print(output);
-  displayZero(hrs);
-  lcd.print(hrs);
+  displayZero(timer::hrs);
+  lcd.print(timer::hrs);
   lcd.print(":");
-  displayZero(mins);
-  lcd.print(mins);
+  displayZero(timer::mins);
+  lcd.print(timer::mins);
   lcd.print(":");
-  displayZero(secs);
-  lcd.print(secs);
+  displayZero(timer::secs);
+  lcd.print(timer::secs);
   lcd.print(" (");
   lcd.print(timer/2);
   lcd.print(")   ");
