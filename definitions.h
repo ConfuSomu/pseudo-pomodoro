@@ -7,6 +7,7 @@
 #define TIMERFREQ 500000 /*Timer run frequency, set at 0.5s. Should not be changed!*/
 #define MSG_UPDATEFREQ 20 /*Speed of scrolling text. In 0.5s (timer) multiples.*/
 #define BREAKIN_TIME (120*2) /*Time before user is asked to take a break. In 0.5s multiples.*/
+#define NEARLYBREAK_TIME (60*2) /*Time before Nearly break is displayed. In 0.5s multiples.*/
 #define BACKTOWORK_TIME (25*2) /*Time before user is asked to work. In 0.5s multiples.*/
 #define BLINKDURATION (20*2) /*LED blink duration. In 0.5s multiples.*/
 
@@ -35,7 +36,7 @@ namespace timer {
 
 namespace message {
   int part = 0; // Message part currently being displayed
-  int len[][2] = {{2, 3}, {5, 3}}; //3 messages for BREAKIN, 6 messages for TAKEBREAK
+  int len[][3] = {{2, 3, 4}, {5, 3}}; // Length of each message, ex. 0 for a message of length 1.
 }
 
 int globalState = 0; //0 = BREAKIN, 1 = TAKEBREAK
@@ -44,7 +45,7 @@ int subState = 0; //Breakin: 0 = working, 1 = should take break; Takebreak: 0 = 
 
 
 // Program strings
-const char S_MSG[2][2][6][LCD_WIDTH+1] = 
+const char S_MSG[2][3][6][LCD_WIDTH+1] =
                                {{ // Break in… (globalState=0)
                                  {"Travaille produ-", // subState=0
                                   "-ctivement pend-",
@@ -52,7 +53,12 @@ const char S_MSG[2][2][6][LCD_WIDTH+1] =
                                  {"Tu deverais pre-", // subState=1
                                   "-endre une pause",
                                   "Appuie sur le   ",
-                                  "bouton.         "}
+                                  "bouton.         "},
+                                 {"Tu y est presque", // subState=2
+                                  "Concentre-toi   ",
+                                  "bien pour ces 20",
+                                  "dernieres  minu-",
+                                  "-tes. Allez!    "}
                                                      },
                                 { // Take a break… (globalState=0)
                                  {"Prends ta pause ", // subState=0

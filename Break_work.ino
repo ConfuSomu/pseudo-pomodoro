@@ -55,7 +55,11 @@ void loop() {
   displayTimeUnits(timerCopy);
 
   if (globalState == 0) { // Work time
-    if (timerCopy > BREAKIN_TIME && subState != 1) {
+    if (timerCopy > NEARLYBREAK_TIME && timerCopy < BREAKIN_TIME && subState != 2) {
+      // Nearly there!
+      message::part = 0;
+      subState = 2;
+    } else if (timerCopy > BREAKIN_TIME && subState != 1) {
       // Break time
       led::blink = 1;
       led::startTime = timerCopy;
