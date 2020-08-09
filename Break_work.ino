@@ -15,7 +15,7 @@ void setup() {
   pinDebouncer.begin();
   
   pinMode(led, OUTPUT);
-  digitalWrite(led, HIGH); // Turn off led
+  digitalWrite(led, LOW); // Turn off led
   
   Timer1.initialize(500000);
   Timer1.attachInterrupt(incTime); // incTime to run every 0.5 seconds
@@ -37,43 +37,40 @@ void loop() {
 
   Serial.print("timer = ");
   Serial.print(timerCopy);
+  Serial.print("blinkStartTime = ");
+  Serial.print(blinkStartTime);
   Serial.print(" message = ");
   Serial.print(message);
   Serial.print(" subState = ");
   Serial.print(subState);
   Serial.print(" globalState = ");
-  Serial.print(globalState);
-  Serial.print("Triggered (A|B)");
-  Serial.print(triggeredA);
-  Serial.println(triggeredB);
+  Serial.println(globalState);
 
   calculateTimeUnits(timerCopy);
   displayMessage(timerCopy);
   displayTimeUnits(timerCopy);
 
   if (globalState == 0) { // Work time
-    if (timer > 120*2 && !triggeredA) {
+    if (timer > 120*2 && subState != 1) {
       // Break time after 120 sec
-      blinkLed = 1;
-      subState = 1;
+      blinkLed = 1; blinkStartTime = timerCopy;
       message = 0;
-      triggeredA = 1;
+      subState = 1;
     }
   
   } else if (globalState == 1) { // Break time
-    if (timer > /*80*/25*2 && !triggeredB) {
+    if (timer > /*80*/25*2 && subState != 1) {
       // Back to work after 25 sec
-      blinkLed = 1; 
-      subState = 1;
+      blinkLed = 1; blinkStartTime = timerCopy;
       message = 0;
-      triggeredB = 1;
+      subState = 1;
     }
   }
 
-  if (timer > 20*2) {
+  if (blinkLed && timer > blinkStartTime+20*2) {
     // Stop blinking led 20 sec after globalState switch.
     blinkLed = 0;
-    digitalWrite(led, HIGH); // Turn off led
+    digitalWrite(led, LOW); // Turn off led
   }
 }
 
@@ -81,8 +78,9 @@ void loop() {
 void onPinActivated(int pin){
   Serial.println("Button pressed down");
   if (pin == button) {
-    globalState = !globalState; subState = 0;
-    triggeredA = 0; triggeredB = 0;
+    globalState = !globalState;
+    subState = 0;
+    blinkLed = 0;
 
     noInterrupts();
     timer = 0; // Reset timer when switching between globalStates

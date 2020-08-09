@@ -36,6 +36,7 @@ int ledState = LOW;
 volatile int blinkLed = 0; //boolean if led should be blinked in incTimer
 
 volatile unsigned long timer = 0;
+unsigned long blinkStartTime;
 unsigned long hrs = 0;
 unsigned long mins = 0;
 unsigned int secs = 0;
@@ -45,6 +46,3 @@ int globalState = 0; //0 = BREAKIN, 1 = TAKEBREAK
 int subState = 0; //Breakin: 0 = working, 1 = should take break; Takebreak: 0 = break, 1 = should work
 int messageLen[][2] = {{2, 3}, {5, 3}}; //3 messages for BREAKIN, 6 messages for TAKEBREAK
 #define SS_SHOULDSWITCH 1 /*Message id used to indicate that you should switch between work & break*/
-
-int triggeredA = 0;
-int triggeredB = 0;
