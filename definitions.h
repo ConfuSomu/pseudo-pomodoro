@@ -10,6 +10,7 @@
 #define MUSTBREAK_TIME (140*2) /*Time user must take break. In 0.5s multiples.*/
 #define NEARLYBREAK_TIME (60*2) /*Time before Nearly break is displayed. In 0.5s multiples.*/
 #define BACKTOWORK_TIME (25*2) /*Time before user is asked to work. In 0.5s multiples.*/
+#define MUSTWORK_TIME (40*2) /*Time user must work. In 0.5s multiples.*/
 #define BLINKDURATION (20*2) /*LED blink duration. In 0.5s multiples.*/
 
 // LED
@@ -37,7 +38,7 @@ namespace timer {
 
 namespace message {
   int part = 0; // Message part currently being displayed
-  int len[][4] = {{2, 3, 4, 7}, {5, 3}}; // Length of each message, ex. 0 for a message of length 1.
+  int len[][4] = {{2, 3, 4, 7}, {5, 3, 4}}; // Length of each message, ex. 0 for a message of length 1.
 }
 
 int globalState = 0; //0 = BREAKIN, 1 = TAKEBREAK
@@ -79,5 +80,10 @@ const char S_MSG[2][4][11][LCD_WIDTH+1] =
                                  {"Faudrait contin-", // subState=1
                                   "uer a travailler",
                                   "Aller! appuie   ",
-                                  "sur ce bouton.  "}
+                                  "sur ce bouton.  "},
+                                 {"N'arrete pas de ", // subState=2
+                                  "travailler pend-",
+                                  "-ant trop longt-",
+                                  "emps! Tu ne sera",
+                                  "plus concentre. "},
                                                      }};

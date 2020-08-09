@@ -74,12 +74,18 @@ void loop() {
     }
   
   } else if (globalState == 1) { // Break time
-    if (timerCopy > BACKTOWORK_TIME && subState != 1) {
+    if (timerCopy > BACKTOWORK_TIME && timerCopy < MUSTWORK_TIME && subState != 1) {
       // Back to work
       led::blink = 1;
       led::startTime = timerCopy;
       message::part = 0;
       subState = 1;
+    } else if (timerCopy > MUSTWORK_TIME && subState != 2) {
+      // Must take go back to work
+      led::blink = 1;
+      led::startTime = timerCopy;
+      message::part = 0;
+      subState = 2;
     }
   }
 
