@@ -39,31 +39,34 @@ void loop() {
   Serial.print(timerCopy);
   Serial.print(" message = ");
   Serial.print(message);
+  Serial.print(" subState = ");
+  Serial.print(subState);
   Serial.print(" globalState = ");
-  Serial.println(globalState);
+  Serial.print(globalState);
+  Serial.print("Triggered (A|B)");
+  Serial.print(triggeredA);
+  Serial.println(triggeredB);
 
   calculateTimeUnits(timerCopy);
   displayMessage(timerCopy);
   displayTimeUnits(timerCopy);
 
   if (globalState == 0) { // Work time
-    if (timer > 120*2) {
+    if (timer > 120*2 && !triggeredA) {
       // Break time after 120 sec
-      blinkLed = 1; globalState = 1; message = 0;
-      
-      noInterrupts();
-      timer = 0; // Reset timer, for break time.
-      interrupts();
+      blinkLed = 1;
+      subState = 1;
+      message = 0;
+      triggeredA = 1;
     }
   
   } else if (globalState == 1) { // Break time
-    if (timer > 80*2) {
-      // Back to work after 80 sec
-      blinkLed = 1; globalState = 0; message = 0;
-
-      noInterrupts();
-      timer = 0; // Reset timer, for break time.
-      interrupts();
+    if (timer > /*80*/25*2 && !triggeredB) {
+      // Back to work after 25 sec
+      blinkLed = 1; 
+      subState = 1;
+      message = 0;
+      triggeredB = 1;
     }
   }
 
@@ -78,10 +81,12 @@ void loop() {
 void onPinActivated(int pin){
   Serial.println("Button pressed down");
   if (pin == button) {
-    globalState = !globalState; message = 0;
+    globalState = !globalState; subState = 0;
+    triggeredA = 0; triggeredB = 0;
 
     noInterrupts();
-    timer = 0; // Reset timer
+    timer = 0; // Reset timer when switching between globalStates
+    message = 0;
     interrupts();
   }
 }

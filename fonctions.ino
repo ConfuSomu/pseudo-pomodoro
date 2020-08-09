@@ -1,6 +1,7 @@
 void incTime() {
   timer++;
-  if (!(timer % 20)) message++; // Update message each 10 secs
+  if (!(timer % 20)) message++; // Increment messageId each 10 secs
+  
   if (blinkLed && timer % 2) {
     if (ledState == LOW) {
       ledState = HIGH;
@@ -36,12 +37,12 @@ void calculateTimeUnits(unsigned long timer) {
   }
 }
 
-void displayMessage(unsigned long timer) {  
-  // Only show valid messages
-  if (message > stateMessages[globalState]) message = 0;
+void displayMessage(unsigned long timer) {
+  if (message > messageLen[globalState][subState]) message = 0;
   
   lcd.setCursor(0,0);
-  lcd.print(S_MSG[globalState][message]);
+  lcd.print(S_MSG[globalState][subState][message]);
+  Serial.println(S_MSG[globalState][subState][message]);
 }
 
 void displayTimeUnits(unsigned long timer) {
