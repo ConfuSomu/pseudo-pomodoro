@@ -2,7 +2,9 @@
 #include <TimerOne.h>
 #include <LiquidCrystal.h>
 
+#include "lcd-progmem.h"
 #include "definitions.h"
+
 
 LiquidCrystal lcd(7, 6, 5, 4, 3, 2);
 FTDebouncer pinDebouncer;

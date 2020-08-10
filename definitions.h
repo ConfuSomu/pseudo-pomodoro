@@ -47,7 +47,7 @@ byte subState = 0; //Breakin: 0 = working, 1 = should take break; Takebreak: 0 =
 
 
 // Program strings
-const char S_MSG[2][4][11][LCD_WIDTH+1] =
+const char S_MSG[2][4][11][LCD_WIDTH+1] PROGMEM =
                                {{ // Break in… (globalState=0)
                                  {"Travaille produ-", // subState=0
                                   "-ctivement pend-",

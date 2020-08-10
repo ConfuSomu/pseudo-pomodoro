@@ -37,9 +37,9 @@ void displayMessage(unsigned long timer) {
   if (message::part > message::len[globalState][subState]) message::part = 0;
   
   lcd.setCursor(0,0);
-  lcd.print(S_MSG[globalState][subState][message::part]);
+  print_progmem(lcd, S_MSG[globalState][subState][message::part]);
   #ifdef DEBUG
-  Serial.println(S_MSG[globalState][subState][message::part]);
+  //Serial.println(S_MSG[globalState][subState][message::part]);
   #endif
 }
 
