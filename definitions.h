@@ -5,18 +5,18 @@
 #define DEBUG /*Enable debug features*/
 
 #define TIMERFREQ 500000 /*Timer run frequency, set at 0.5s. Should not be changed!*/
-#define MSG_UPDATEFREQ 20 /*Speed of scrolling text. In 0.5s (timer) multiples.*/
-#define BREAKIN_TIME (120*2) /*Time before user is asked to take a break. In 0.5s multiples.*/
-#define MUSTBREAK_TIME (140*2) /*Time user must take break. In 0.5s multiples.*/
-#define NEARLYBREAK_TIME (60*2) /*Time before Nearly break is displayed. In 0.5s multiples.*/
-#define BACKTOWORK_TIME (25*2) /*Time before user is asked to work. In 0.5s multiples.*/
-#define MUSTWORK_TIME (40*2) /*Time user must work. In 0.5s multiples.*/
-#define BLINKDURATION (20*2) /*LED blink duration. In 0.5s multiples.*/
+#define MSG_UPDATEFREQ 8 /*Speed of scrolling text = 4 sec. In 0.5s (timer) multiples.*/
+#define BREAKIN_TIME (52*60*2) /*Time before user is asked to take a break = 52 min. In 0.5s multiples.*/
+#define MUSTBREAK_TIME (80*60*2) /*Time user must take break = 80 min. In 0.5s multiples.*/
+#define NEARLYBREAK_TIME (43*60*2) /*Time before Nearly break is displayed = 43 min. In 0.5s multiples.*/
+#define BACKTOWORK_TIME (17*60*2) /*Time before user is asked to work = 17 min. In 0.5s multiples.*/
+#define MUSTWORK_TIME (22*60*2) /*Time user must work = 22 min. In 0.5s multiples.*/
+#define BLINKDURATION (20*2) /*LED blink duration = 20 sec. In 0.5s multiples.*/
 
 // LED
 namespace led {
   const byte pin = 10;
-  int state = LOW;
+  byte state = LOW;
   volatile int blink = 0; // boolean if led should be blinked in incTimer
   unsigned long startTime; // blinkStartTime
 }
@@ -37,12 +37,12 @@ namespace timer {
 }
 
 namespace message {
-  int part = 0; // Message part currently being displayed
-  int len[][4] = {{2, 3, 4, 7}, {5, 3, 4}}; // Length of each message, ex. 0 for a message of length 1.
+  byte part = 0; // Message part currently being displayed
+  byte len[][4] = {{2, 3, 4, 7}, {5, 3, 4}}; // Length of each message, ex. 0 for a message of length 1.
 }
 
-int globalState = 0; //0 = BREAKIN, 1 = TAKEBREAK
-int subState = 0; //Breakin: 0 = working, 1 = should take break; Takebreak: 0 = break, 1 = should work
+byte globalState = 0; //0 = BREAKIN, 1 = TAKEBREAK
+byte subState = 0; //Breakin: 0 = working, 1 = should take break; Takebreak: 0 = break, 1 = should work
 // The subState & globalState dictates which message will be shown.
 
 
