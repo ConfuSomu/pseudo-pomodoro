@@ -6,12 +6,17 @@
 
 #define TIMERFREQ 500000 /*Timer run frequency, set at 0.5s. Should not be changed!*/
 #define MSG_UPDATEFREQ 8 /*Speed of scrolling text = 4 sec. In 0.5s (timer) multiples.*/
+
 #define BREAKIN_TIME (52*60*2) /*Time before user is asked to take a break = 52 min. In 0.5s multiples.*/
 #define MUSTBREAK_TIME (80*60*2) /*Time user must take break = 80 min. In 0.5s multiples.*/
 #define NEARLYBREAK_TIME (43*60*2) /*Time before Nearly break is displayed = 43 min. In 0.5s multiples.*/
 #define BACKTOWORK_TIME (17*60*2) /*Time before user is asked to work = 17 min. In 0.5s multiples.*/
 #define MUSTWORK_TIME (22*60*2) /*Time user must work = 22 min. In 0.5s multiples.*/
+
 #define BLINKDURATION (20*2) /*LED blink duration = 20 sec. In 0.5s multiples.*/
+#define BUZZDURATION (40*2) /*Buzz duration = 40 sec. In 0.5s multiples.*/
+#define BUZZTONE 1000 /*Buzz tone (Hz)*/
+#define BUZZTONEDURATION 2000 /*Buzz tone duration (ms)*/
 
 // LED
 namespace led {
@@ -19,6 +24,14 @@ namespace led {
   byte state = LOW;
   volatile int blink = 0; // boolean if led should be blinked in incTimer
   unsigned long startTime; // blinkStartTime
+}
+
+// Buzzer
+namespace buzzer {
+  const byte pin = 9;
+  byte state = LOW;
+  volatile int buzz = 0; // boolean if buzzer should buzz in incTimer
+  unsigned long startTime; // buzzStartTime
 }
 
 // Button

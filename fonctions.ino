@@ -6,6 +6,9 @@ void incTime() {
     led::state = ! led::state;
     digitalWrite(led::pin, led::state);
   }
+  if (buzzer::buzz && !(timer::t % 8)) {
+    tone(buzzer::pin, BUZZTONE, BUZZTONEDURATION);
+  }
 }
 
 // Pad the number to two digits

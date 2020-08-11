@@ -20,8 +20,10 @@ void setup() {
   #ifdef DEBUG
   Serial.begin(9600);
   digitalWrite(led::pin, HIGH);
+  tone(buzzer::pin, BUZZTONE);
   delay(1000);
   digitalWrite(led::pin, LOW);
+  noTone(buzzer::pin);
   #endif
   
   Timer1.initialize(TIMERFREQ);
@@ -73,7 +75,9 @@ void loop() {
     } else if (timerCopy > MUSTBREAK_TIME && subState != 3) {
       // Must take a break
       led::blink = 1;
+      buzzer::buzz = 1;
       led::startTime = timerCopy;
+      buzzer::startTime = timerCopy;
       message::part = 0;
       subState = 3;
     }
@@ -88,7 +92,9 @@ void loop() {
     } else if (timerCopy > MUSTWORK_TIME && subState != 2) {
       // Must take go back to work
       led::blink = 1;
+      buzzer::buzz = 1;
       led::startTime = timerCopy;
+      buzzer::startTime = timerCopy;
       message::part = 0;
       subState = 2;
     }
@@ -99,6 +105,9 @@ void loop() {
     led::blink = 0;
     digitalWrite(led::pin, LOW);
   }
+  if (buzzer::buzz && timerCopy > buzzer::startTime+BUZZDURATION) {
+    buzzer::buzz = 0;
+  }
 }
 
 // Used by FTDebouncer, when buttons get activated
@@ -108,6 +117,7 @@ void onPinActivated(int pin){
     globalState = !globalState; // Invert globalState, effectively switching between the two modes
     subState = 0;
     led::blink = 0;
+    buzzer::buzz = 0;
 
     noInterrupts();
     timer::t = 0; // Reset timer when switching between globalStates
