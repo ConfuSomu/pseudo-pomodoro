@@ -11,15 +11,18 @@ FTDebouncer pinDebouncer;
 
 void setup() {
   lcd.begin(LCD_WIDTH, LCD_HEIGHT);
-  
-  #ifdef DEBUG
-  Serial.begin(9600);
-  #endif
 
   pinDebouncer.addPin(button::pin, LOW);
   pinDebouncer.begin();
   
   pinMode(led::pin, OUTPUT);
+  
+  #ifdef DEBUG
+  Serial.begin(9600);
+  digitalWrite(led::pin, HIGH);
+  delay(1000);
+  digitalWrite(led::pin, LOW);
+  #endif
   
   Timer1.initialize(TIMERFREQ);
   Timer1.attachInterrupt(incTime); // incTime to run every 0.5 seconds
