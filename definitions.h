@@ -18,6 +18,8 @@
 #define BUZZTONE 1000 /*Buzz tone (Hz)*/
 #define BUZZTONEDURATION 2000 /*Buzz tone duration (ms)*/
 
+void changeStates(byte new_subState, unsigned long timer = 0, byte do_blinkLed = 0, byte do_buzz = 0);
+
 // LED
 namespace led {
   const byte pin = 10;

@@ -64,39 +64,49 @@ void loop() {
   if (globalState == 0) { // Work time
     if (timerCopy > NEARLYBREAK_TIME && timerCopy < BREAKIN_TIME && subState != 2) {
       // Nearly there!
-      message::part = 0;
-      subState = 2;
+      changeStates(2);
+
+//      message::part = 0;
+//      subState = 2;
     } else if (timerCopy > BREAKIN_TIME && timerCopy < MUSTBREAK_TIME && subState != 1) {
       // Break time
-      led::blink = 1;
-      led::startTime = timerCopy-BLINKDURATION; // Allows for longer blink duration
-      message::part = 0;
-      subState = 1;
+      changeStates(1, timerCopy, 1);
+
+//      led::blink = 1;
+//      led::startTime = timerCopy;
+//      message::part = 0;
+//      subState = 1;
     } else if (timerCopy > MUSTBREAK_TIME && subState != 3) {
       // Must take a break
-      led::blink = 1;
-      buzzer::buzz = 1;
-      led::startTime = timerCopy;
-      buzzer::startTime = timerCopy;
-      message::part = 0;
-      subState = 3;
+      changeStates(3, timerCopy, 1, 1);
+
+//      led::blink = 1;
+//      buzzer::buzz = 1;
+//      led::startTime = timerCopy;
+//      buzzer::startTime = timerCopy;
+//      message::part = 0;
+//      subState = 3;
     }
   
   } else if (globalState == 1) { // Break time
     if (timerCopy > BACKTOWORK_TIME && timerCopy < MUSTWORK_TIME && subState != 1) {
       // Back to work
-      led::blink = 1;
-      led::startTime = timerCopy;
-      message::part = 0;
-      subState = 1;
+      changeStates(1, timerCopy, 1);
+
+//      led::blink = 1;
+//      led::startTime = timerCopy;
+//      message::part = 0;
+//      subState = 1;
     } else if (timerCopy > MUSTWORK_TIME && subState != 2) {
       // Must take go back to work
-      led::blink = 1;
-      buzzer::buzz = 1;
-      led::startTime = timerCopy;
-      buzzer::startTime = timerCopy;
-      message::part = 0;
-      subState = 2;
+      changeStates(2, timerCopy, 1, 1);
+
+//      led::blink = 1;
+//      buzzer::buzz = 1;
+//      led::startTime = timerCopy;
+//      buzzer::startTime = timerCopy;
+//      message::part = 0;
+//      subState = 2;
     }
   }
 

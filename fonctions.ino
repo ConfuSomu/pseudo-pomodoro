@@ -60,3 +60,21 @@ void displayTimeUnits(unsigned long timer) {
   lcd.print(timer/2);
   lcd.print(")   ");
 }
+
+void changeStates(byte new_subState, unsigned long timer, byte do_blinkLed, byte do_buzz) {
+  // Reset position in message, as the state is generally changed
+  message::part = 0;
+
+  // Apply the new states
+  subState = new_subState;
+
+  // Check for led blinking & buzzer
+  if (do_blinkLed) {
+    led::blink = do_blinkLed; // Allow for non bool parameters, overkill for this project
+    led::startTime = timer;
+  }
+  if (do_buzz) {
+    buzzer::buzz = do_buzz;
+    buzzer::startTime = timer;
+  }
+}
