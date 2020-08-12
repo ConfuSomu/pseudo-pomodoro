@@ -5,7 +5,7 @@
 #define DEBUG /*Enable debug features*/
 
 #define TIMERFREQ 500000 /*Timer run frequency, set at 0.5s. Should not be changed!*/
-#define MSG_UPDATEFREQ 8 /*Speed of scrolling text = 4 sec. In 0.5s (timer) multiples.*/
+#define MSG_UPDATEFREQ 6 /*Speed of scrolling text = 3 sec. In 0.5s (timer) multiples.*/
 
 #define BREAKIN_TIME (52*60*2) /*Time before user is asked to take a break = 52 min. In 0.5s multiples.*/
 #define MUSTBREAK_TIME (80*60*2) /*Time user must take break = 80 min. In 0.5s multiples.*/
