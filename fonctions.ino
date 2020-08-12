@@ -47,7 +47,7 @@ void displayMessage(unsigned long timer) {
 }
 
 void displayTimeUnits(unsigned long timer) {
-  lcd.setCursor(0,1);
+  lcd.setCursor(4,1); // Second line, fifth position for centering
   displayZero(timer::hrs);
   lcd.print(timer::hrs);
   lcd.print(":");
@@ -56,9 +56,6 @@ void displayTimeUnits(unsigned long timer) {
   lcd.print(":");
   displayZero(timer::secs);
   lcd.print(timer::secs);
-  lcd.print(" (");
-  lcd.print(timer/2);
-  lcd.print(")   ");
 }
 
 void changeStates(byte new_subState, unsigned long timer, byte do_blinkLed, byte do_buzz) {
