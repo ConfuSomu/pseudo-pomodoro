@@ -14,11 +14,8 @@
 #define MUSTWORK_TIME (22*60*2) /*Time user must work = 22 min. In 0.5s multiples.*/
 
 #define BLINKDURATION (20*2) /*LED blink duration = 20 sec. In 0.5s multiples.*/
-#define BUZZDURATION (40*2) /*Buzz duration = 40 sec. In 0.5s multiples.*/
-#define BUZZTONE 1000 /*Buzz tone (Hz)*/
-#define BUZZTONEDURATION 2000 /*Buzz tone duration (ms)*/
 
-void changeStates(byte new_subState, unsigned long timer = 0, byte do_blinkLed = 0, byte do_buzz = 0);
+void changeStates(byte new_subState, unsigned long timer = 0, byte do_blinkLed = 0);
 
 // LED
 namespace led {
@@ -26,14 +23,6 @@ namespace led {
   byte state = LOW;
   volatile int blink = 0; // boolean if led should be blinked in incTimer
   unsigned long startTime; // blinkStartTime
-}
-
-// Buzzer
-namespace buzzer {
-  const byte pin = 9;
-  byte state = LOW;
-  volatile int buzz = 0; // boolean if buzzer should buzz in incTimer
-  unsigned long startTime; // buzzStartTime
 }
 
 // Button

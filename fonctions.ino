@@ -6,9 +6,6 @@ void incTime() {
     led::state = ! led::state;
     digitalWrite(led::pin, led::state);
   }
-  if (buzzer::buzz && !(timer::t % 8)) {
-    tone(buzzer::pin, BUZZTONE, BUZZTONEDURATION);
-  }
 }
 
 // Pad the number to two digits
@@ -58,20 +55,16 @@ void displayTimeUnits(unsigned long timer) {
   lcd.print(timer::secs);
 }
 
-void changeStates(byte new_subState, unsigned long timer, byte do_blinkLed, byte do_buzz) {
+void changeStates(byte new_subState, unsigned long timer, byte do_blinkLed) {
   // Reset position in message, as the state is generally changed
   message::part = 0;
 
   // Apply the new states
   subState = new_subState;
 
-  // Check for led blinking & buzzer
+  // Check for led blinking
   if (do_blinkLed) {
     led::blink = do_blinkLed; // Allow for non bool parameters, overkill for this project
     led::startTime = timer;
-  }
-  if (do_buzz) {
-    buzzer::buzz = do_buzz;
-    buzzer::startTime = timer;
   }
 }
