@@ -32,7 +32,6 @@ void loop() {
   pinDebouncer.update();
   
   unsigned long timerCopy;  // holds a copy of the timer
-  //unsigned long blinkLedCopy;  // holds a copy of blinkLed
   // to read a variable which the interrupt code writes, we
   // must temporarily disable interrupts, to be sure it will
   // not change while we are reading.  To minimize the time
@@ -61,46 +60,22 @@ void loop() {
 
   if (globalState == 0) { // Work time
     if (timerCopy > NEARLYBREAK_TIME && timerCopy < BREAKIN_TIME && subState != 2) {
-      // Nearly there!
+      // Close to break time
       changeStates(2);
-
-//      message::part = 0;
-//      subState = 2;
     } else if (timerCopy > BREAKIN_TIME && timerCopy < MUSTBREAK_TIME && subState != 1) {
-      // Break time
+      // User should take a break
       changeStates(1, timerCopy, 1);
-
-//      led::blink = 1;
-//      led::startTime = timerCopy;
-//      message::part = 0;
-//      subState = 1;
     } else if (timerCopy > MUSTBREAK_TIME && subState != 3) {
-      // Must take a break
+      // User must take a break
       changeStates(3, timerCopy, 1);
-
-//      led::blink = 1;
-//      led::startTime = timerCopy;
-//      message::part = 0;
-//      subState = 3;
     }
-  
   } else if (globalState == 1) { // Break time
     if (timerCopy > BACKTOWORK_TIME && timerCopy < MUSTWORK_TIME && subState != 1) {
-      // Back to work
+      // User should work
       changeStates(1, timerCopy, 1);
-
-//      led::blink = 1;
-//      led::startTime = timerCopy;
-//      message::part = 0;
-//      subState = 1;
     } else if (timerCopy > MUSTWORK_TIME && subState != 2) {
-      // Must take go back to work
+      // User must work
       changeStates(2, timerCopy, 1);
-
-//      led::blink = 1;
-//      led::startTime = timerCopy;
-//      message::part = 0;
-//      subState = 2;
     }
   }
 

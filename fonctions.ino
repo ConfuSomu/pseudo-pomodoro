@@ -1,6 +1,6 @@
 void incTime() {
   timer::t++;
-  if (!(timer::t % MSG_UPDATEFREQ)) message::part++; // Increment messageId each 10 secs
+  if (!(timer::t % MSG_UPDATEFREQ)) message::part++; // Increment messageId at a speed defined by MSG_UPDATEFREQ
   
   if (led::blink && timer::t % 2) {
     led::state = ! led::state;
@@ -56,10 +56,7 @@ void displayTimeUnits(unsigned long timer) {
 }
 
 void changeStates(byte new_subState, unsigned long timer, byte do_blinkLed) {
-  // Reset position in message, as the state is generally changed
   message::part = 0;
-
-  // Apply the new states
   subState = new_subState;
 
   // Check for led blinking
