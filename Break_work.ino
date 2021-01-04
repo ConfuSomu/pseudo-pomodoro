@@ -11,6 +11,8 @@ FTDebouncer pinDebouncer;
 
 void setup() {
   lcd.begin(LCD_WIDTH, LCD_HEIGHT);
+  lcd.print("\xA2pseudoPomodoro\xA3"); // "「peusdoPomodoro」" → requires character ROM code A00. See strings.h
+  delay(1000);
 
   pinDebouncer.addPin(button::pin, LOW);
   pinDebouncer.begin();
@@ -20,7 +22,7 @@ void setup() {
   #ifdef DEBUG
   Serial.begin(9600);
   digitalWrite(led::pin, HIGH);
-  delay(1000);
+  delay(200);
   digitalWrite(led::pin, LOW);
   #endif
   

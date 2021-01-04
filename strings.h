@@ -5,7 +5,7 @@ namespace message {
 
 // Program strings
 /* Hex values are character codes for special characters, as defined in the HD44780U datasheet.
- * Note that the international/european version (ROM code: A02) is required for these characters to display properly. The more common, japanese version, will display greek characters instead of the following.
+ * Note that the international/european version (ROM code: A02) is required for these characters to display properly. The more common, japanese version (ROM code: A00), will display greek characters instead of the following.
  * E0=11100000=à
  * EA=11101010=ê
  * E9=11101001=é
