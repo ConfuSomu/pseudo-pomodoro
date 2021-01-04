@@ -1,6 +1,6 @@
 namespace message {
   byte part = 0; // Message part currently being displayed
-  byte len[][4] = {{2, 3, 4, 7}, {5, 3, 4}}; // Length of each message, ex. 0 for a message of length 1.
+  byte len[][4] = {{3, 3, 4, 7}, {5, 3, 6}}; // Length of each message, ex. 0 for a message of length 1.
 }
 
 // Program strings
@@ -13,41 +13,44 @@ namespace message {
  */
 const char S_MSG[2][4][11][LCD_WIDTH+1] PROGMEM =
                                {{ // Break in… (globalState=0)
-                                 {"Travaille produ-", // subState=0
-                                  "-ctivement pend-",
-                                  "-ant 52 minutes!"},
-                                 {"Tu devrais pre- ", // subState=1
-                                  "-endre une pause",
-                                  "Appuies sur le  ",
-                                  "bouton.         "},
-                                 {"Tu y es  presque", // subState=2
-                                  "Concentre-toi   ",
-                                  "bien pour ces 9 ",
-                                  "derni\xE8res  minu-",
-                                  "-tes. Allez!    "},
-                                 {"Il est extr\xEAmem-", // subState=3
-                                  "-ent important  ",
-                                  "que tu prennes  ",
-                                  "une pause pour  ",
-                                  "ton bien-\xEAtre.  ",
-                                  "Prends la pause ",
-                                  "en appuyant sur ",
-                                  "le bouton.      "}
+                                 {"Make sure to    ", // subState=0
+                                  "work productive-",
+                                  "ly for 52 mins! ",
+                                  "Don't give up!  "},
+                                 {"You should now  ", // subState=1
+                                  "take a break!   ",
+                                  "Press on the    ",
+                                  "button.         "},
+                                 {"It's nearly bre-", // subState=2
+                                  "ak time! Focus  ",
+                                  "during these    ",
+                                  "last minutes.   ",
+                                  "You can do this!"},
+                                 {"For your health ", // subState=3
+                                  "and well being, ",
+                                  "it is important ",
+                                  "to take a break.",
+                                  "Take yours, and ",
+                                  "track your time,",
+                                  "by pressing on  ",
+                                  "the button.     "}
                                                      },
                                 { // Take a break… (globalState=1)
-                                 {"Prends ta pause ", // subState=0
-                                  "de 17 minutes   ",
-                                  "(appuies sur le ",
-                                  "bouton pour rep-",
-                                  "-rendre ton     ",
-                                  "travail)        "},
-                                 {"Faudrait contin-", // subState=1
-                                  "uer \xE0 travailler",
-                                  "Allez! appuyez  ",
-                                  "sur ce bouton.  "},
-                                 {"N'arr\xEAte pas de ", // subState=2
-                                  "travailler pend-",
-                                  "-ant trop longte",
-                                  "mps! Tu ne seras",
-                                  "plus concentr/xE9. "},
+                                 {"Now is your time", // subState=0
+                                  "to relax. Once  ",
+                                  "you are done, or",
+                                  "the light blinks",
+                                  "press on the    ",
+                                  "button.         "},
+                                 {"You should head ", // subState=1
+                                  "back to work. Go",
+                                  "on, press on the",
+                                  "button.         "},
+                                 {"Taking a break  ", // subState=2
+                                  "for too long    ",
+                                  "will make you   ",
+                                  "distracted. It  ",
+                                  "won't be easy to",
+                                  "be productive   ",
+                                  "later on...     "},
                                                      }};
