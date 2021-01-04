@@ -4,6 +4,7 @@
 
 #include "lcd-progmem.h"
 #include "definitions.h"
+#include "chars.h"
 #include "strings.h"
 
 LiquidCrystal lcd(7, 6, 5, 4, 3, 2);
@@ -11,6 +12,7 @@ FTDebouncer pinDebouncer;
 
 void setup() {
   lcd.begin(LCD_WIDTH, LCD_HEIGHT);
+  registerChars(lcd);
   lcd.print("\xA2pseudoPomodoro\xA3"); // "「peusdoPomodoro」" → requires character ROM code A00. See strings.h
   delay(1000);
 
@@ -59,6 +61,7 @@ void loop() {
   calculateTimeUnits(timerCopy);
   displayMessage(timerCopy);
   displayTimeUnits(timerCopy);
+  displayStatusIcons();
 
   if (globalState == 0) { // Work time
     if (timerCopy > NEARLYBREAK_TIME && timerCopy < BREAKIN_TIME && subState != 2) {
