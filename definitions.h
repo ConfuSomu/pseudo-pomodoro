@@ -41,5 +41,5 @@ namespace timer {
 }
 
 byte globalState = 0; //0 = BREAKIN, 1 = TAKEBREAK
-byte subState = 0; //Breakin: 0 = working, 1 = should take break; Takebreak: 0 = break, 1 = should work
+byte subState = 0; // 0: continue, 1: should, 2: must, 3: additional message
 // The subState & globalState dictates which message will be shown.
