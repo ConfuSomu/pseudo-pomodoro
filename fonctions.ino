@@ -71,12 +71,14 @@ void displayStatusIcons() {
 }
 
 void changeStates(byte new_subState, unsigned long timer, byte do_blinkLed) {
-  message::part = 0;
-  subState = new_subState;
+  if (new_subState != subState) { // Do nothing if nothing has changed
+    message::part = 0;
+    subState = new_subState;
 
-  // Check for led blinking
-  if (do_blinkLed) {
-    led::blink = do_blinkLed; // Allow for non bool parameters, overkill for this project
-    led::startTime = timer;
+    // Check for led blinking
+    if (do_blinkLed) {
+      led::blink = do_blinkLed; // Allow for non bool parameters, overkill for this project
+      led::startTime = timer;
+    }
   }
 }

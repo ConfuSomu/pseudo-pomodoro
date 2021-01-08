@@ -64,21 +64,26 @@ void loop() {
   displayStatusIcons();
 
   if (globalState == 0) { // Work time
-    if (timerCopy > NEARLYBREAK_TIME && timerCopy < BREAKIN_TIME && subState != 3) {
+
+    if (timerCopy > NEARLYBREAK_TIME && timerCopy < BREAKIN_TIME) {
       // Close to break time (additional message)
       changeStates(3);
-    } else if (timerCopy > BREAKIN_TIME && timerCopy < MUSTBREAK_TIME && subState != 1) {
+
+    } else if (timerCopy > BREAKIN_TIME && timerCopy < MUSTBREAK_TIME) {
       // User should take a break (should)
       changeStates(1, timerCopy, 1);
-    } else if (timerCopy > MUSTBREAK_TIME && subState != 2) {
+
+    } else if (timerCopy > MUSTBREAK_TIME) {
       // User must take a break (must)
       changeStates(2, timerCopy, 1);
     }
   } else if (globalState == 1) { // Break time
-    if (timerCopy > BACKTOWORK_TIME && timerCopy < MUSTWORK_TIME && subState != 1) {
+
+    if (timerCopy > BACKTOWORK_TIME && timerCopy < MUSTWORK_TIME) {
       // User should work (should)
       changeStates(1, timerCopy, 1);
-    } else if (timerCopy > MUSTWORK_TIME && subState != 2) {
+
+    } else if (timerCopy > MUSTWORK_TIME) {
       // User must work (must)
       changeStates(2, timerCopy, 1);
     }
