@@ -58,11 +58,11 @@ void displayTimeUnits(unsigned long timer) {
 void displayStatusIcons() {
   lcd.setCursor(0,1);
   switch (subState) {
-    case 2:
+    case MUST:
       lcd.setCursor(1,1);
       lcd.write(1); // Warn
       lcd.setCursor(0,1);
-    case 1:
+    case SHOULD:
       lcd.write(byte(0)); // Bell
       break;
     default:

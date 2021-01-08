@@ -40,6 +40,9 @@ namespace timer {
   unsigned int secs = 0;
 }
 
-byte globalState = 0; //0 = BREAKIN, 1 = TAKEBREAK
-byte subState = 0; // 0: continue, 1: should, 2: must, 3: additional message
 // The subState & globalState dictates which message will be shown.
+enum : byte {WORK, BREAK};
+enum : byte {CONTINUE, SHOULD, MUST};
+
+byte globalState = WORK;
+byte subState = CONTINUE; // 0: continue, 1: should, 2: must, 3: additional message

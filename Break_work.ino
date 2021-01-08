@@ -63,7 +63,7 @@ void loop() {
   displayTimeUnits(timerCopy);
   displayStatusIcons();
 
-  if (globalState == 0) { // Work time
+  if (globalState == WORK) {
 
     if (timerCopy > NEARLYBREAK_TIME && timerCopy < BREAKIN_TIME) {
       // Close to break time (additional message)
@@ -71,21 +71,21 @@ void loop() {
 
     } else if (timerCopy > BREAKIN_TIME && timerCopy < MUSTBREAK_TIME) {
       // User should take a break (should)
-      changeStates(1, timerCopy, 1);
+      changeStates(SHOULD, timerCopy, 1);
 
     } else if (timerCopy > MUSTBREAK_TIME) {
       // User must take a break (must)
-      changeStates(2, timerCopy, 1);
+      changeStates(MUST, timerCopy, 1);
     }
-  } else if (globalState == 1) { // Break time
+  } else if (globalState == BREAK) {
 
     if (timerCopy > BACKTOWORK_TIME && timerCopy < MUSTWORK_TIME) {
       // User should work (should)
-      changeStates(1, timerCopy, 1);
+      changeStates(SHOULD, timerCopy, 1);
 
     } else if (timerCopy > MUSTWORK_TIME) {
       // User must work (must)
-      changeStates(2, timerCopy, 1);
+      changeStates(MUST, timerCopy, 1);
     }
   }
 
