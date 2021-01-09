@@ -63,7 +63,11 @@ void displayStatusIcons() {
       lcd.write(1); // Warn
       lcd.setCursor(0,1);
     case SHOULD:
-      lcd.write(byte(0)); // Bell
+      if (led::state) {
+        lcd.write(2); // Ringing bell
+      } else {
+        lcd.write(byte(0)); // Bell
+      }
       break;
     default:
       lcd.print("  "); // Clear
